@@ -1,4 +1,8 @@
 # 如何写一个自己的脚手架 - 一键初始化项目
+## 容易忘记的git操作
+
+- git remote add origin "初始化的仓库地址"
+- git push -u origin master 
 
 ## 介绍
 
