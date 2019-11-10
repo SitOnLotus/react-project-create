@@ -1,0 +1,24 @@
+{
+  "name": "react-project-create",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SitOnLotus/react-project-create.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "my-cli": "bin.js"
+  },
+  "dependencies": {
+    "commander": "^3.0.1",
+    "cross-spawn": "^7.0.0",
+    "mkdirp": "^0.5.1"
+  }
+}
