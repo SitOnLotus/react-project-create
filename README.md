@@ -18,15 +18,15 @@
 
 例如一键初始化项目功能
 
-我期望的就是 在命令行执行输入 `my-cli create text-project`，回车后直接创建项目并生成模板，还会把依赖都下载好
+我期望的就是 在命令行执行输入 `react-project-create create text-project`，回车后直接创建项目并生成模板，还会把依赖都下载好
 
 我们下面就从命令行开始入手
 
-创建项目 `my-cli`，执行 `npm init -y`快速初始化
+创建项目 `react-project-create`，执行 `npm init -y`快速初始化
 
 ## bin
 
-**`my-cli`**：
+**`react-project-create`**：
 
 在 `package.json` 中加入：
 
@@ -88,11 +88,11 @@ program.parse(process.argv);
 
 `commander` 解析完成后会触发`action`回调方法
 
-命令行执行：`my-cli -v`
+命令行执行：`react-project-create -v`
 
 输出：`1.0.0`
 
-命令行执行： `my-cli create test-project`
+命令行执行： `react-project-create create test-project`
 
 输出：`test-project`
 
@@ -129,7 +129,7 @@ module.exports = function(name) {
   });
 ```
 
-命令行执行： `my-cli create test-project`
+命令行执行： `react-project-create create test-project`
 
 输出：`创建成功`
 
@@ -139,15 +139,19 @@ module.exports = function(name) {
 
 首先需要先列出我们的模板包含哪些文件
 
-一个最基础版的`vue`项目模板：
+一个最基础版的`react`项目模板：
 
 ```
 |- src
-  |- main.js
-  |- App.vue
+  |-
+  |- utils
+  |- pages
   |- components
-    |- HelloWorld.vue
-|- index.html
+  |- index.js
+  |- app.js
+|- dist
+|- index.js
+|- webpack.config.js
 |- package.json
 ```
 
@@ -178,14 +182,30 @@ module.exports = function(name) {
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "webpack-dev-server --open",
+    "build": "webpack"
+  },
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jquery": "^3.4.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.0"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "vue": "^2.6.10"
-  }
+
 }
   `;
   return { template, dir: "", name: "package.json" };
@@ -239,7 +259,7 @@ module.exports = function install(options) {
   const cwd = options.cwd || process.cwd();
   return new Promise((resolve, reject) => {
     const command = options.isYarn ? "yarn" : "npm";
-    const args = ["install", "--save", "--save-exact", "--loglevel", "error"];
+    const args = ["install", "--save", "--save-exact", "-D","--save-dev","--loglevel", "error"];
     const child = spawn(command, args, { cwd, stdio: ["pipe", process.stdout, process.stderr] });
 
     child.once("close", code => {
@@ -254,6 +274,7 @@ module.exports = function install(options) {
     child.once("error", reject);
   });
 };
+
 ```
 
 然后我们就可以在创建完模板后调用`install`方法下载依赖
@@ -340,5 +361,3 @@ module.exports = async function(name) {
 其实要学会善用第三方库，你会发现我们上面的每个模块都有第三方库的身影，我们只是将这些功能组装起来，再结合我们的想法进一步封装
 
 虽然有`vue-cli`，`create-react-app`这些已有的脚手架，但是我们还是可能在某些情况下需要自己实现脚手架部分功能，根据公司的业务来封装，减少重复性工作，或者了解一下内部原理
-
-【青团社】招聘前端方面： 高级/资深/技术专家，欢迎投递 `lishixuan@qtshe.com`
