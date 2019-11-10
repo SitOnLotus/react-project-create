@@ -50,13 +50,13 @@ console.log(process.argv);
 
 命令行执行 `npm link` ，创建软链接至全局，这样我们就可以全局使用`my-cli`命令了，在开发 `npm` 包的前期都会使用`link`方式在其他项目中测试来开发，后期再发布到`npm`上
 
-命令行执行 `my-cli 1 2 3`
+命令行执行 `react-project-create 1 2 3`
 
 输出：`[ '/usr/local/bin/node', '/usr/local/bin/my-cli', '1', '2', '3' ]`
 
 这样我们就可以获取到用户的输入参数
 
-例如`my-cli create test-project`
+例如`react-project-create create test-project`
 
 我们就可以通过数组第 [2] 位判断命令类型`create`，通过第 [3] 位拿到项目名称`test-project`
 
